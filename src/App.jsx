@@ -20,7 +20,7 @@ function App() {
       id: 3,
       title: "Praticar TypeScript",
       description: "Converter um projeto JavaScript para TypeScript",
-      isCompleted: true,
+      isCompleted: false,
     },
     {
       id: 4,
@@ -50,12 +50,35 @@ function App() {
     setTasks(newTask);
   }
 
+  function deleteTask(taskId) {
+    const updatedTask = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedTask);
+  }
+
+  function addTask(title, description) {
+    const newTask = {
+      id: tasks.length + 1,
+      title: title,
+      description: description,
+    };
+
+    setTasks([...tasks, newTask]);
+  }
+
   return (
     <div className="w-screen h-screen bg-slate-500 flex justify-center p-6">
-      <div className="w-125">
-        <h1 className="text-red-500">Gerenciador de tarefas</h1>
-        <AddTask />
-        <Tasks tasks={tasks} onTaskClick={onTaskClick} />
+      <div className="w-125 space-y-4">
+        <p className="text-amber-50 text-2xl text-center">
+          Gerenciador de tarefas
+        </p>
+
+        <AddTask addTask={addTask} />
+
+        <Tasks
+          tasks={tasks}
+          onTaskClick={onTaskClick}
+          deleteTask={deleteTask}
+        />
       </div>
     </div>
   );
